@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [Header("Movement")]
+
+    public float speed = 3f;
+
+    Rigidbody2D rb2d;
+
     void Start()
     {
-        
+        rb2d = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate() 
     {
-        
+        rb2d.MovePosition(transform.position + (new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * Time.fixedDeltaTime * speed));
     }
 }
