@@ -7,16 +7,26 @@ public class Character : MonoBehaviour
     [Header("Movement")]
 
     public float speed = 3f;
-
     Rigidbody2D rb2d;
+    SpriteRenderer spriteRenderer;
+    private Vector2 moveInput;
+    private Animator animator;
+    public AnimationStateChanger asc;
+    
 
+    public bool MovePlayer(Vector2 direction) {
+        Vector2 moveVector = direction * speed * Time.fixedDeltaTime;
+        rb2d.MovePosition(rb2d.position + moveVector);
+        return true;
+    }
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
-    void FixedUpdate() 
-    {
-        rb2d.MovePosition(transform.position + (new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * Time.fixedDeltaTime * speed));
-    }
+    // public void OnMove(InputValue value)
+    // {
+    //     moveInput = value.Get<Vector2>();
+    // }
 }
