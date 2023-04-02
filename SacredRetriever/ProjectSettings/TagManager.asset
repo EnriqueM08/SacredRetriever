@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - BlueKey
+  - PurpleKey
+  - YellowKey
+  - BlueBlock
+  - PurpleBlock
+  - YellowBlock
   layers:
   - Default
   - TransparentFX
@@ -12,7 +18,7 @@ TagManager:
   - Walls
   - Water
   - UI
-  - 
+  - Enemy
   - 
   - 
   - 

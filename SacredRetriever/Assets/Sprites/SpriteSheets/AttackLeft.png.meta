@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3adaf4b7a9fa1c84a891c1728d9822d0
+guid: 7275157259cccaf4bb2c53f159a4ccad
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,73 +105,10 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WalkRight_0
+      name: AttackLeft_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 128
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fdfb0ac57ad079c46bcde99e391f9ba6
-      internalID: -1866327367
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WalkRight_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 128
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 88bb2b6362b68314f97a0110a83c88e6
-      internalID: -1881389857
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WalkRight_2
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 128
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 02f8472b684c1ab47a2c2bf76ac9591b
-      internalID: -1597233773
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WalkRight_3
-      rect:
-        serializedVersion: 2
-        x: 0
+        x: 34
         y: 64
         width: 64
         height: 64
@@ -182,17 +119,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 89126814dbab0a744ad89c1d017099ac
-      internalID: -1852702799
+      spriteID: 8ca15b4f6533cf64296ecf0b2729a8ac
+      internalID: -1094722538
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WalkRight_4
+      name: AttackLeft_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 112
         y: 64
         width: 64
         height: 64
@@ -203,40 +140,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ec803857613c6414096bcf838cce4241
-      internalID: -481239176
+      spriteID: 2d73804d98fc3c64cacac45c55b0dc95
+      internalID: 1259849274
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WalkRight_5
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 66c668d420c9f9b488eb018aa5fc731e
-      internalID: -569697154
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WalkRight_6
+      name: AttackLeft_2
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
+        width: 85
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -245,19 +161,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e898b9dc4ff99ac428df0489418fe521
-      internalID: 384181100
+      spriteID: 61bc0e8c03a11c0469114b439504228e
+      internalID: 1217750169
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WalkRight_7
+      name: AttackLeft_3
       rect:
         serializedVersion: 2
-        x: 64
+        x: 96
         y: 0
-        width: 64
+        width: 80
         height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -266,8 +182,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91114b80459d2a744903d3bfc1d33036
-      internalID: 191165993
+      spriteID: 82cd137f043dd354385dfc4342f9d38d
+      internalID: -1655910261
       vertices: []
       indices: 
       edges: []
@@ -283,14 +199,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      WalkRight_2: -1597233773
-      WalkRight_7: 191165993
-      WalkRight_3: -1852702799
-      WalkRight_6: 384181100
-      WalkRight_5: -569697154
-      WalkRight_0: -1866327367
-      WalkRight_4: -481239176
-      WalkRight_1: -1881389857
+      AttackLeft_0: -1094722538
+      AttackLeft_3: -1655910261
+      AttackLeft_1: 1259849274
+      AttackLeft_2: 1217750169
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

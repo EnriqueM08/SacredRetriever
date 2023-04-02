@@ -35,8 +35,8 @@ AnimatorStateMachine:
     m_State: {fileID: 2303298806356988800}
     m_Position: {x: 320, y: 20, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 2591945161273035003}
-    m_Position: {x: 420, y: 140, z: 0}
+    m_State: {fileID: 2921983552317153209}
+    m_Position: {x: 355, y: 85, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -73,14 +73,14 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &2591945161273035003
+--- !u!1102 &2921983552317153209
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Walking
+  m_Name: BlobDeath
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -93,7 +93,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: f9ba3a57f25ba69428a72e85bc51d86e, type: 2}
+  m_Motion: {fileID: 7400000, guid: 076a1982a5ead3044ab8fa6b9f2f3eb9, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

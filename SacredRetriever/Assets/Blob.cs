@@ -4,66 +4,34 @@ using UnityEngine;
 
 public class Blob : MonoBehaviour
 {
-    // Rigidbody2D rb;
-    // SpriteRenderer spriteRenderer;
-    // public float speed = 2.5f;
-    // public AnimationStateChanger asc;
+    public int maxHealth = 20;
+    int currentHealth;
+    public Animator animator;
+    
 
-    // public bool platformingCreature = false; //when true, change behavior to work like 2D platformer char
+    void Start()
+    {
+        currentHealth = maxHealth;
+    }
 
-    // public float jumpVel = 5;
-    // void Start(){
-    //     spriteRenderer = GetComponent<SpriteRenderer>();
-    //     rb = GetComponent<Rigidbody2D>();
-    // }
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        //transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z);
+        if(currentHealth <= 0)
+        {
+            StartCoroutine("Die");
+        }
+    }
 
-
-    // public void Move(Vector3 offset){
-    //     if(offset != Vector3.zero){
-    //         offset.Normalize();
-    //         //offset *= Time.fixedDeltaTime;
-    //         //rb.MovePosition(transform.position + ((offset)*speed));
-    //         Vector3 vel = offset *= speed;
-    //         if(platformingCreature){
-    //             rb.velocity = new Vector2(vel.x,rb.velocity.y);
-    //         }else{
-    //             rb.velocity = vel;
-    //         }
-            
-            
-    //         asc.ChangeAnimationState("Walking");
-    //         if(offset.x < 0){
-    //             spriteRenderer.flipX = true;
-    //         }else{
-    //             spriteRenderer.flipX = false;
-    //         }
-    //     }else{
-    //         Stop();
-    //     //asc.ChangeAnimationState("Idle"); 
-    //     }
-    // }
-
-    // public void Stop(){
-    //     //return;
-    //     if(platformingCreature){
-    //         rb.velocity = new Vector2(0,rb.velocity.y);
-    //     }else{
-    //         rb.velocity = Vector3.zero;
-    //     }
-    //     asc.ChangeAnimationState("Idle");
-        
-        
-    // }
-
-    // public void MoveToward(Vector3 position){
-    //     Move(position - transform.position);
-    // }
-
-    // public void Jump(){
-    //     if(!platformingCreature){
-    //         return;
-    //     }
-    //     rb.velocity = new Vector2(rb.velocity.x,jumpVel);
-
-    // }
+    IEnumerator Die()
+    {
+        Debug.Log("Enemy died!");
+        animator.Play("BlobDeath");
+        yield return new WaitForSeconds(.05f);
+        GameObject parent = this.transform.parent.gameObject;
+        Destroy(parent);
+        Destroy(this);
+    }
 }
+

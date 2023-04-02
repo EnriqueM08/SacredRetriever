@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4690218405349948616}
   - component: {fileID: 4690218405349948628}
   - component: {fileID: 4690218405349948629}
-  - component: {fileID: 4690218405349948630}
   - component: {fileID: 4690218405349948631}
   m_Layer: 0
   m_Name: Blob
@@ -77,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1316480661, guid: 99e74a555b1dac24c90a2f17e0e1a543, type: 3}
+  m_Sprite: {fileID: -1281329749, guid: abd80e58713907549bfd9866633ac209, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -126,31 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c85e5160af4ddd345a88ad22d2bd1378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  platformingEnemy: 0
-  jumpVel: 5
---- !u!114 &4690218405349948630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4690218405349948618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd95001370e9db74e86af5edff2cf54c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathBlockMask:
-    serializedVersion: 2
-    m_Bits: 0
-  aStarScanDist: 1
-  spawnMarkers: 1
-  findingPath: 0
-  reachedDestination: 0
-  waypointMarker: {fileID: 8002609210006504454, guid: 6a73a9195f1e49e40b6f719fa7082046, type: 3}
-  goal: {fileID: 0}
-  aStarPath: []
+  maxHealth: 100
 --- !u!50 &4690218405349948631
 Rigidbody2D:
   serializedVersion: 4
