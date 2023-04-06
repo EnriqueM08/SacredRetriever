@@ -19,7 +19,7 @@ public class pressurePlate : MonoBehaviour
     }
 
      private void OnTriggerEnter2D(Collider2D other) {
-        if(other.gameObject.tag == "Player") {
+        if(other.gameObject.tag == "Player" && (!aBlock.GetComponent<block>().inPlace || !bBlock.GetComponent<block>().inPlace || !cBlock.GetComponent<block>().inPlace)) {
             aBlock.transform.position = aLoc;
             bBlock.transform.position = bLoc;
             cBlock.transform.position = cLoc;
@@ -29,6 +29,15 @@ public class pressurePlate : MonoBehaviour
             a.velocity = Vector3.zero;
             b.velocity = Vector3.zero;
             c.velocity = Vector3.zero;
+            a.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
+            a.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
+            a.constraints = RigidbodyConstraints2D.FreezeRotation;
+            b.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
+            b.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
+            b.constraints = RigidbodyConstraints2D.FreezeRotation;
+            c.constraints &= ~RigidbodyConstraints2D.FreezePositionX;
+            c.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
+            c.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 }

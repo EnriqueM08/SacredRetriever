@@ -22,7 +22,7 @@ public class SpawnBlobs : MonoBehaviour
 
     IEnumerator GenerateBlobs() {
         while(true) {
-            Vector2 randomPosition = new Vector2(Random.Range(-22f,-15f),Random.Range(-4.5f, 4.5f));
+            Vector2 randomPosition = new Vector2(Random.Range(-21f,-20f),Random.Range(5f, 6f));
             yield return new WaitForSeconds(3f);
             GameObject newBlob = Instantiate(BlobPrefab, randomPosition, Quaternion.identity);
             //Destroy(gameObject, 60);

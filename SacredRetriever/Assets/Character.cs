@@ -12,10 +12,15 @@ public class Character : MonoBehaviour
     public Animator animator;
     bool left = false;
     public Transform attackPointRight;
+    public Transform attackPointLeft;
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
     public int attackDamage = 20;
     bool attacking = false;
+    public int maxHealth = 1000;
+    int currentHealth;
+    public bool isDead = false;
+    public bool hasTreasure = false;
     
 
     void MovePlayer(Vector3 input) {
@@ -33,6 +38,7 @@ public class Character : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        currentHealth = maxHealth;
     }
 
     void Update () {
@@ -67,7 +73,7 @@ public class Character : MonoBehaviour
             else if(attacking == false)
                 StartCoroutine(AttackRight());
         }
-        else if(!moving && !attacking) {
+        if(!moving && !attacking) {
             if(!left)
                 animator.Play("IdleKnight");
             else
@@ -82,7 +88,10 @@ public class Character : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointRight.position, attackRange, enemyLayers);
         foreach(Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<Blob>().TakeDamage(attackDamage);
+            if(enemy.tag == "Blob")
+                enemy.GetComponent<Blob>().TakeDamage(attackDamage);
+            else if(enemy.tag == "Spawner")
+                enemy.GetComponent<Spawner>().TakeDamage(attackDamage);
         }
         animator.Play("IdleKnight");
         yield return new WaitForSeconds(2);
@@ -93,10 +102,13 @@ public class Character : MonoBehaviour
         attacking = true;
         animator.Play("KnightAttackLeft");
         yield return new WaitForSeconds(0.5f);
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointRight.position, attackRange, enemyLayers);
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointLeft.position, attackRange, enemyLayers);
         foreach(Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<Blob>().TakeDamage(attackDamage);
+            if(enemy.tag == "Blob")
+                enemy.GetComponent<Blob>().TakeDamage(attackDamage);
+            else if(enemy.tag == "Spawner")
+                enemy.GetComponent<Spawner>().TakeDamage(attackDamage);
         }
         animator.Play("IdleKnightLeft");
         yield return new WaitForSeconds(2);
@@ -110,7 +122,41 @@ public class Character : MonoBehaviour
             return;
         }
         Gizmos.DrawWireSphere(attackPointRight.position, attackRange);
+        if(attackPointLeft == null)
+        {
+            return;
+        }
+        Gizmos.DrawWireSphere(attackPointLeft.position, attackRange);
     }
+
+    public void TakeDamage(int damage)
+    {
+        Debug.Log("DAMAGE");
+        currentHealth -= damage;
+        //transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z);
+        if(currentHealth <= 0)
+        {
+            StartCoroutine("EndGame");
+        }
+    }
+
+    IEnumerator EndGame()
+    {
+        Debug.Log("Player died!");
+        //Add death animation
+        yield return new WaitForSeconds(1f);
+        isDead = true;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+     {
+        if (other.gameObject.CompareTag("SacredItem"))
+        {
+            Debug.Log("RAN");
+            Destroy(other.gameObject);
+            hasTreasure = true;
+        }
+     }
     // public void OnMove(InputValue value)
     // {
     //     moveInput = value.Get<Vector2>();

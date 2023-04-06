@@ -4,13 +4,18 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
+  - Blob
   - BlueKey
   - PurpleKey
   - YellowKey
   - BlueBlock
   - PurpleBlock
   - YellowBlock
+  - SacredItem
+  - Spawner
+  - Enemy
+  - Music
+  - FX
   layers:
   - Default
   - TransparentFX
@@ -19,7 +24,7 @@ TagManager:
   - Water
   - UI
   - Enemy
-  - 
+  - Character
   - 
   - 
   - 
