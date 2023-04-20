@@ -126,6 +126,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  animator: {fileID: 0}
+  attackPoint: {fileID: 0}
+  attackRange: 0.5
+  PlayerLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  attackDamage: 20
+  poolManager: {fileID: 3659867014514518679, guid: b2dfd96b84de13d489d75c94dcb5e3d2, type: 3}
 --- !u!50 &4690218405349948631
 Rigidbody2D:
   serializedVersion: 4

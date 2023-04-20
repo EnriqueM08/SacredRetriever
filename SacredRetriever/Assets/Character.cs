@@ -17,10 +17,11 @@ public class Character : MonoBehaviour
     public LayerMask enemyLayers;
     public int attackDamage = 20;
     bool attacking = false;
-    public int maxHealth = 1000;
-    int currentHealth;
+    public float maxHealth = 1000;
+    public float currentHealth;
     public bool isDead = false;
     public bool hasTreasure = false;
+    public HealthBar healthBar;
     
 
     void MovePlayer(Vector3 input) {
@@ -133,6 +134,7 @@ public class Character : MonoBehaviour
     {
         Debug.Log("DAMAGE");
         currentHealth -= damage;
+        healthBar.UpdateHealthBar();
         //transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z);
         if(currentHealth <= 0)
         {

@@ -12,6 +12,7 @@ public class Blob : MonoBehaviour
     public LayerMask PlayerLayers;
     public int attackDamage = 20;
     bool canAttack = true;
+    public PoolManager poolManager;
     
 
     void Start()
@@ -43,10 +44,9 @@ public class Blob : MonoBehaviour
     {
         Debug.Log("Enemy died!");
         animator.Play("BlobDeath");
+        currentHealth = 20;
         yield return new WaitForSeconds(.1f);
-        GameObject parent = this.transform.parent.gameObject;
-        Destroy(parent);
-        Destroy(gameObject);
+        poolManager.DespawnEnemy(this.transform.parent.gameObject);
     }
 
     public void Attack() {

@@ -4,28 +4,35 @@ using UnityEngine;
 
 public class SpawnBlobs : MonoBehaviour
 {
-    public GameObject BlobPrefab;
     public GameObject character;
+    private List<GameObject> enemyPool = new List<GameObject>();
+    private bool inRange = false;
+    public PoolManager PoolManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine("GenerateBlobs"); 
+        character = GameObject.FindGameObjectWithTag("Player");
+        StartCoroutine(SpawnBlob());
     }
 
-    void update() {
-        //if(character.transform.position.x <= 12.5f)
-             
-        //else
-          //  StopAllCoroutines();
+    void Update() {
+        if(character.transform.localPosition.x <= -12.5f) {
+            inRange = true;
+        }
+        else {
+            inRange = false;
+        }
     }
 
-    IEnumerator GenerateBlobs() {
+    IEnumerator SpawnBlob() {
         while(true) {
-            Vector2 randomPosition = new Vector2(Random.Range(-21f,-20f),Random.Range(5f, 6f));
+            if(inRange) {
+                Vector2 randomPosition = new Vector2(Random.Range(-21f,-20f),Random.Range(5f, 6f));
+                GameObject newBlob = PoolManager.RequestEnemy();
+                newBlob.transform.position = randomPosition;
+            }
             yield return new WaitForSeconds(3f);
-            GameObject newBlob = Instantiate(BlobPrefab, randomPosition, Quaternion.identity);
-            //Destroy(gameObject, 60);
         }
     }
 }
