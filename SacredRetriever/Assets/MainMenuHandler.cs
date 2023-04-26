@@ -6,10 +6,12 @@ using UnityEngine.SceneManagement;
 public class MainMenuHandler : MonoBehaviour
 {
     public Canvas options;
+    public Canvas keyBinds;
     public GameObject mainMenu;
     public void Start()
     {
         options.enabled = false;
+        keyBinds.enabled = false;
     }
     public void StartGame(){
         SceneManager.LoadScene("Level1");

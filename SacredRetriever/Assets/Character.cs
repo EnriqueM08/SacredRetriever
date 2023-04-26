@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Character : MonoBehaviour
 {
     [Header("Movement")]
 
     public float speed = 3f;
-    Rigidbody2D rb2d;
+    public PlayerInput playerActions;
+    private Vector2 movement;
+    private Rigidbody2D rb2d;
     SpriteRenderer spriteRenderer;
     public Animator animator;
     bool left = false;
@@ -23,67 +26,138 @@ public class Character : MonoBehaviour
     public bool hasTreasure = false;
     public HealthBar healthBar;
     private bool playingAttackAnimation = false;
-    
+    public LevelHandler levelHandler;
+    private bool attackPressed = false;
+    bool walking = false;
+    bool inFire = false;
+    private void OnMovement (InputValue value) {
+        movement = value.Get<Vector2>();
+        walking = true;
+    }
 
-    void MovePlayer(Vector3 input) {
-        if(input.x < 0)
+    private void OnAttack() {
+        attackPressed = true;
+    }
+
+    void MovePlayer() {
+        if(movement.x < 0)
         {
             animator.Play("WalkLeft");
+            left = true;
         }
-        else if(input.x > 0)
+        else if(movement.x > 0)
         {
             animator.Play("WalkRight");
+            left = false;
         }
-        rb2d.transform.position += input;
+        if(movement.x == 0 && movement.y == 0)
+            walking = false;
+        else{
+            StopAllCoroutines();
+            rb2d.MovePosition(rb2d.position + movement * speed * Time.fixedDeltaTime);
+        }
+        //walking = false;
     }
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        switch (PlayerPrefs.GetInt("difficulty"))
+        {
+                case 0:
+                    maxHealth = 500;
+                    break;
+                case 1:
+                    maxHealth = 300;
+                    break;
+                case 2:
+                    maxHealth = 200;
+                    break;
+                case 3:
+                    maxHealth = 100;
+                    break;
+        }
         currentHealth = maxHealth;
     }
 
-    void Update () {
-        bool moving = false;
-        if(!playingAttackAnimation) {
-            if (Input.GetButton("Right")) {
-                StopAllCoroutines();
-                MovePlayer(Vector3.right * speed * Time.deltaTime);
-                moving = true;
-                left = false;
-                attacking = false;
-            }
-            if(Input.GetButton("Left")) {
-                StopAllCoroutines();
-                MovePlayer(Vector3.left * speed * Time.deltaTime);
-                moving = true;
-                left = true; 
-                attacking = false;
-            }
-            if(Input.GetButton("Up")) {
-                MovePlayer(Vector3.up * speed * Time.deltaTime);
-                moving = true;
-            }
-            if(Input.GetButton("Down")) {
-                MovePlayer(Vector3.down * speed * Time.deltaTime);
-                moving = true;
-            }
-            if(Input.GetButton("Attack")) {
-                if(left == true && attacking == false)
-                {
-                    StartCoroutine(AttackLeft());
+    private void FixedUpdate() {
+        if(inFire)
+            TakeDamage(1);
+        if(!LevelHandler.isPaused) {
+            bool moving = false;
+            if(!playingAttackAnimation) {
+                if(walking) {
+                    MovePlayer();
+                    attacking = false;
+                    moving = true;
                 }
-                else if(attacking == false)
-                    StartCoroutine(AttackRight());
+                if(attackPressed) {
+                    if(left == true && attacking == false)
+                    {
+                        StartCoroutine(AttackLeft());
+                    }
+                    else if(attacking == false)
+                        StartCoroutine(AttackRight());
+                    attackPressed = false;
+                }
             }
+            if(!moving && !attacking) {
+                if(!left)
+                    animator.Play("IdleKnight");
+                else
+                    animator.Play("IdleKnightLeft");
+            }
+            //walking = false;
         }
-        if(!moving && !attacking) {
-            if(!left)
-                animator.Play("IdleKnight");
-            else
-                animator.Play("IdleKnightLeft");
-        }
-     }
+    }
+
+    // void Update () {
+        // moveInput = playerActions.PlayerMap.Movement.ReadValue<Vector2>();
+        // moveInput.y = 0f;
+        // Debug.Log(moveInput);
+        // rb2d.velocity = moveInput * speed;
+        // if(!LevelHandler.isPaused) {
+        //     bool moving = false;
+        //     if(!playingAttackAnimation) {
+        //         if (Input.GetButton("Right")) {
+        //             StopAllCoroutines();
+        //             MovePlayer(Vector3.right * speed * Time.deltaTime);
+        //             moving = true;
+        //             left = false;
+        //             attacking = false;
+        //         }
+        //         if(Input.GetButton("Left")) {
+        //             StopAllCoroutines();
+        //             MovePlayer(Vector3.left * speed * Time.deltaTime);
+        //             moving = true;
+        //             left = true; 
+        //             attacking = false;
+        //         }
+        //         if(Input.GetButton("Up")) {
+        //             MovePlayer(Vector3.up * speed * Time.deltaTime);
+        //             moving = true;
+        //         }
+        //         if(Input.GetButton("Down")) {
+        //             MovePlayer(Vector3.down * speed * Time.deltaTime);
+        //             moving = true;
+        //         }
+        //         if(Input.GetButton("Attack")) {
+        //             if(left == true && attacking == false)
+        //             {
+        //                 StartCoroutine(AttackLeft());
+        //             }
+        //             else if(attacking == false)
+        //                 StartCoroutine(AttackRight());
+        //         }
+        //     }
+        //     if(!moving && !attacking) {
+        //         if(!left)
+        //             animator.Play("IdleKnight");
+        //         else
+        //             animator.Play("IdleKnightLeft");
+        //     }
+        // }
+    //  }
 
     IEnumerator AttackRight() {
         attacking = true;
@@ -165,9 +239,13 @@ public class Character : MonoBehaviour
             Destroy(other.gameObject);
             hasTreasure = true;
         }
+        if(other.gameObject.CompareTag("Fire")) {
+            inFire = true;
+        }
      }
-    // public void OnMove(InputValue value)
-    // {
-    //     moveInput = value.Get<Vector2>();
-    // }
+
+     void OnTriggerExit2D(Collider2D other) {
+        if(other.gameObject.CompareTag("Fire"))
+            inFire = false;
+     }
 }

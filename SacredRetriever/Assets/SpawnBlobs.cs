@@ -32,7 +32,21 @@ public class SpawnBlobs : MonoBehaviour
                 GameObject newBlob = PoolManager.RequestEnemy();
                 newBlob.transform.position = randomPosition;
             }
-            yield return new WaitForSeconds(3f);
+            switch (PlayerPrefs.GetInt("difficulty"))
+            {
+                case 0:
+                    yield return new WaitForSeconds(3f);
+                    break;
+                case 1:
+                    yield return new WaitForSeconds(2f);
+                    break;
+                case 2:
+                    yield return new WaitForSeconds(1.5f);
+                    break;
+                case 3:
+                    yield return new WaitForSeconds(1f);
+                    break;
+            }
         }
     }
 }
