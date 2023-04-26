@@ -22,6 +22,7 @@ public class Character : MonoBehaviour
     public bool isDead = false;
     public bool hasTreasure = false;
     public HealthBar healthBar;
+    private bool playingAttackAnimation = false;
     
 
     void MovePlayer(Vector3 input) {
@@ -44,35 +45,37 @@ public class Character : MonoBehaviour
 
     void Update () {
         bool moving = false;
-        if (Input.GetButton("Right")) {
-            StopAllCoroutines();
-             MovePlayer(Vector3.right * speed * Time.deltaTime);
-             moving = true;
-             left = false;
-             attacking = false;
-        }
-        if(Input.GetButton("Left")) {
-            StopAllCoroutines();
-            MovePlayer(Vector3.left * speed * Time.deltaTime);
-            moving = true;
-            left = true; 
-            attacking = false;
-        }
-        if(Input.GetButton("Up")) {
-            MovePlayer(Vector3.up * speed * Time.deltaTime);
-            moving = true;
-        }
-        if(Input.GetButton("Down")) {
-            MovePlayer(Vector3.down * speed * Time.deltaTime);
-            moving = true;
-        }
-        if(Input.GetButton("Attack")) {
-            if(left == true && attacking == false)
-            {
-                StartCoroutine(AttackLeft());
+        if(!playingAttackAnimation) {
+            if (Input.GetButton("Right")) {
+                StopAllCoroutines();
+                MovePlayer(Vector3.right * speed * Time.deltaTime);
+                moving = true;
+                left = false;
+                attacking = false;
             }
-            else if(attacking == false)
-                StartCoroutine(AttackRight());
+            if(Input.GetButton("Left")) {
+                StopAllCoroutines();
+                MovePlayer(Vector3.left * speed * Time.deltaTime);
+                moving = true;
+                left = true; 
+                attacking = false;
+            }
+            if(Input.GetButton("Up")) {
+                MovePlayer(Vector3.up * speed * Time.deltaTime);
+                moving = true;
+            }
+            if(Input.GetButton("Down")) {
+                MovePlayer(Vector3.down * speed * Time.deltaTime);
+                moving = true;
+            }
+            if(Input.GetButton("Attack")) {
+                if(left == true && attacking == false)
+                {
+                    StartCoroutine(AttackLeft());
+                }
+                else if(attacking == false)
+                    StartCoroutine(AttackRight());
+            }
         }
         if(!moving && !attacking) {
             if(!left)
@@ -84,6 +87,7 @@ public class Character : MonoBehaviour
 
     IEnumerator AttackRight() {
         attacking = true;
+        playingAttackAnimation = true;
         animator.Play("KnightAttack");
         yield return new WaitForSeconds(0.5f);
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointRight.position, attackRange, enemyLayers);
@@ -94,13 +98,15 @@ public class Character : MonoBehaviour
             else if(enemy.tag == "Spawner")
                 enemy.GetComponent<Spawner>().TakeDamage(attackDamage);
         }
+        playingAttackAnimation = false;
         animator.Play("IdleKnight");
-        yield return new WaitForSeconds(2);
+        //yield return new WaitForSeconds(2);
         attacking = false;
     }
 
     IEnumerator AttackLeft() {
         attacking = true;
+        playingAttackAnimation = true;
         animator.Play("KnightAttackLeft");
         yield return new WaitForSeconds(0.5f);
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointLeft.position, attackRange, enemyLayers);
@@ -111,8 +117,9 @@ public class Character : MonoBehaviour
             else if(enemy.tag == "Spawner")
                 enemy.GetComponent<Spawner>().TakeDamage(attackDamage);
         }
+        playingAttackAnimation = false;
         animator.Play("IdleKnightLeft");
-        yield return new WaitForSeconds(2);
+        //yield return new WaitForSeconds(2);
         attacking = false;
     }
 

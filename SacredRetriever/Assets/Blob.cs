@@ -46,6 +46,7 @@ public class Blob : MonoBehaviour
         animator.Play("BlobDeath");
         currentHealth = 20;
         yield return new WaitForSeconds(.1f);
+        canAttack = true;
         poolManager.DespawnEnemy(this.transform.parent.gameObject);
     }
 

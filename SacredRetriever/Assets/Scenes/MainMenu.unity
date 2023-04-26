@@ -645,16 +645,22 @@ MonoBehaviour:
   m_ItemImage: {fileID: 0}
   m_Value: 0
   m_Options:
-    m_Options:
-    - m_Text: Option A
-      m_Image: {fileID: 0}
-    - m_Text: Option B
-      m_Image: {fileID: 0}
-    - m_Text: Option C
-      m_Image: {fileID: 0}
+    m_Options: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1296434976}
+        m_TargetAssemblyTypeName: ScreenOptions, Assembly-CSharp
+        m_MethodName: SetResolution
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &195608020
 MonoBehaviour:
@@ -1957,7 +1963,6 @@ GameObject:
   m_Component:
   - component: {fileID: 701116420}
   - component: {fileID: 701116422}
-  - component: {fileID: 701116421}
   m_Layer: 5
   m_Name: MasterSlider
   m_TagString: Untagged
@@ -1988,22 +1993,6 @@ RectTransform:
   m_AnchoredPosition: {x: 121, y: -12}
   m_SizeDelta: {x: 236.47, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &701116421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 701116419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8833082a9d85cc44bbe07aa28e3a483a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: 5233812b080bf1b4792993a273eb6882, type: 2}
-  MasterVolume: {fileID: 701116422}
-  MusicVolume: {fileID: 1654635920}
-  FXVolume: {fileID: 1964306648}
 --- !u!114 &701116422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2055,10 +2044,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 701116421}
-        m_TargetAssemblyTypeName: SetVolume, Assembly-CSharp
-        m_MethodName: SetLevelMaster
-        m_Mode: 4
+      - m_Target: {fileID: 1296434975}
+        m_TargetAssemblyTypeName: SoundOptions, Assembly-CSharp
+        m_MethodName: SetMasterVolume
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3143,6 +3132,8 @@ GameObject:
   - component: {fileID: 1296434973}
   - component: {fileID: 1296434972}
   - component: {fileID: 1296434971}
+  - component: {fileID: 1296434975}
+  - component: {fileID: 1296434976}
   m_Layer: 5
   m_Name: Options
   m_TagString: Untagged
@@ -3232,6 +3223,36 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1296434975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296434970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b55e7ed643a3af42a2c74bb3f994436, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 5233812b080bf1b4792993a273eb6882, type: 2}
+  masterSlider: {fileID: 701116422}
+  musicSlider: {fileID: 1654635920}
+  sfxSlider: {fileID: 1964306648}
+--- !u!114 &1296434976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1296434970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f9486f7f2ee6104a9c4ca7b3e84928b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resolutionDropdown: {fileID: 195608019}
+  isFullScreen: {fileID: 1739579237}
 --- !u!1 &1397689470
 GameObject:
   m_ObjectHideFlags: 0
@@ -3456,7 +3477,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Option A
+  m_Text: 
 --- !u!222 &1408025355
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3731,7 +3752,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1654635918}
   - component: {fileID: 1654635920}
-  - component: {fileID: 1654635919}
   m_Layer: 5
   m_Name: MusicSlider
   m_TagString: Untagged
@@ -3762,22 +3782,6 @@ RectTransform:
   m_AnchoredPosition: {x: 121, y: -57}
   m_SizeDelta: {x: 236.47, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1654635919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1654635917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8833082a9d85cc44bbe07aa28e3a483a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: 5233812b080bf1b4792993a273eb6882, type: 2}
-  MasterVolume: {fileID: 701116422}
-  MusicVolume: {fileID: 1654635920}
-  FXVolume: {fileID: 1964306648}
 --- !u!114 &1654635920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3829,10 +3833,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1654635919}
-        m_TargetAssemblyTypeName: SetVolume, Assembly-CSharp
-        m_MethodName: SetLevelMusic
-        m_Mode: 4
+      - m_Target: {fileID: 1296434975}
+        m_TargetAssemblyTypeName: SoundOptions, Assembly-CSharp
+        m_MethodName: SetMusicVolume
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3925,7 +3929,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1296434976}
+        m_TargetAssemblyTypeName: ScreenOptions, Assembly-CSharp
+        m_MethodName: SetResolution
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1772352193
 GameObject:
@@ -4167,9 +4183,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1964306646}
   - component: {fileID: 1964306648}
-  - component: {fileID: 1964306647}
   m_Layer: 5
-  m_Name: FXSlider
+  m_Name: SFXSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4198,22 +4213,6 @@ RectTransform:
   m_AnchoredPosition: {x: 121, y: -98}
   m_SizeDelta: {x: 236.47, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1964306647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1964306645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8833082a9d85cc44bbe07aa28e3a483a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: 5233812b080bf1b4792993a273eb6882, type: 2}
-  MasterVolume: {fileID: 701116422}
-  MusicVolume: {fileID: 1654635920}
-  FXVolume: {fileID: 1964306648}
 --- !u!114 &1964306648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4265,10 +4264,10 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1964306647}
-        m_TargetAssemblyTypeName: SetVolume, Assembly-CSharp
-        m_MethodName: SetLevelFX
-        m_Mode: 4
+      - m_Target: {fileID: 1296434975}
+        m_TargetAssemblyTypeName: SoundOptions, Assembly-CSharp
+        m_MethodName: SetSFXVolume
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4413,7 +4412,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 55
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -4424,7 +4423,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'FX Volume:'
+  m_Text: 'SFX Volume:'
 --- !u!222 &2031233264
 CanvasRenderer:
   m_ObjectHideFlags: 0

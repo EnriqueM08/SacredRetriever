@@ -50,7 +50,7 @@ AudioMixerController:
   m_UpdateMode: 0
   m_ExposedParameters:
   - guid: 34829b75bbb908c428b727fc449ab7b2
-    name: FX
+    name: SFX
   - guid: cb2688be43fc708428ff5b6a0ce3ad1a
     name: MasterVol
   - guid: 9075fa49db0810d43b4ea667e229de95
@@ -107,7 +107,8 @@ AudioMixerSnapshotController:
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 7b121604879d45e45a8909b46e2e474d
-  m_FloatValues: {}
+  m_FloatValues:
+    cb2688be43fc708428ff5b6a0ce3ad1a: 0
   m_TransitionOverrides: {}
 --- !u!243 &1092193135703174131
 AudioMixerGroupController:
@@ -115,7 +116,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FX
+  m_Name: SFX
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 4a3201384a381e74c8da31b499646787
   m_Children: []
