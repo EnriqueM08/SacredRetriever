@@ -17,6 +17,18 @@ public class Blob : MonoBehaviour
 
     void Start()
     {
+        Debug.Log(PlayerPrefs.GetInt("difficulty"));
+        switch (PlayerPrefs.GetInt("difficulty"))
+        {
+                case 0:
+                case 1:
+                    maxHealth = 20;
+                    break;
+                case 2:
+                case 3:
+                    maxHealth = 40;
+                    break;
+        }
         currentHealth = maxHealth;
     }
 
@@ -31,7 +43,6 @@ public class Blob : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        Debug.Log("RAN");
         currentHealth -= damage;
         //transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z);
         if(currentHealth <= 0)
@@ -44,7 +55,7 @@ public class Blob : MonoBehaviour
     {
         Debug.Log("Enemy died!");
         animator.Play("BlobDeath");
-        currentHealth = 20;
+        currentHealth = 40;
         yield return new WaitForSeconds(.1f);
         canAttack = true;
         poolManager.DespawnEnemy(this.transform.parent.gameObject);

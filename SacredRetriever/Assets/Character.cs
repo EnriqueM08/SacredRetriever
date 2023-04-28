@@ -39,6 +39,10 @@ public class Character : MonoBehaviour
         attackPressed = true;
     }
 
+    private void OnPauseGame() {
+        levelHandler.PauseGame();
+    }
+
     void MovePlayer() {
         if(movement.x < 0)
         {
@@ -49,6 +53,13 @@ public class Character : MonoBehaviour
         {
             animator.Play("WalkRight");
             left = false;
+        }
+        else if(movement.y != 0){
+            if(left) {
+                animator.Play("WalkLeft");
+            }
+            else
+                animator.Play("WalkRight");
         }
         if(movement.x == 0 && movement.y == 0)
             walking = false;
@@ -62,6 +73,7 @@ public class Character : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<HealthBar>();
         switch (PlayerPrefs.GetInt("difficulty"))
         {
                 case 0:
@@ -103,15 +115,19 @@ public class Character : MonoBehaviour
             }
             if(!moving && !attacking) {
                 if(!left)
-                    animator.Play("IdleKnight");
+                    animator.Play("IdleRight");
                 else
-                    animator.Play("IdleKnightLeft");
+                    animator.Play("IdleLeft");
             }
             //walking = false;
         }
     }
 
-    // void Update () {
+    void Update () {
+        if(currentHealth <= 0)
+        {
+            StartCoroutine("EndGame");
+        }
         // moveInput = playerActions.PlayerMap.Movement.ReadValue<Vector2>();
         // moveInput.y = 0f;
         // Debug.Log(moveInput);
@@ -157,13 +173,13 @@ public class Character : MonoBehaviour
         //             animator.Play("IdleKnightLeft");
         //     }
         // }
-    //  }
+    }
 
     IEnumerator AttackRight() {
         attacking = true;
         playingAttackAnimation = true;
-        animator.Play("KnightAttack");
-        yield return new WaitForSeconds(0.5f);
+        animator.Play("AttackRight");
+        yield return new WaitForSeconds(0.75f);
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointRight.position, attackRange, enemyLayers);
         foreach(Collider2D enemy in hitEnemies)
         {
@@ -173,7 +189,7 @@ public class Character : MonoBehaviour
                 enemy.GetComponent<Spawner>().TakeDamage(attackDamage);
         }
         playingAttackAnimation = false;
-        animator.Play("IdleKnight");
+        animator.Play("IdleRight");
         //yield return new WaitForSeconds(2);
         attacking = false;
     }
@@ -181,8 +197,8 @@ public class Character : MonoBehaviour
     IEnumerator AttackLeft() {
         attacking = true;
         playingAttackAnimation = true;
-        animator.Play("KnightAttackLeft");
-        yield return new WaitForSeconds(0.5f);
+        animator.Play("AttackLeft");
+        yield return new WaitForSeconds(0.75f);
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointLeft.position, attackRange, enemyLayers);
         foreach(Collider2D enemy in hitEnemies)
         {
@@ -192,7 +208,7 @@ public class Character : MonoBehaviour
                 enemy.GetComponent<Spawner>().TakeDamage(attackDamage);
         }
         playingAttackAnimation = false;
-        animator.Play("IdleKnightLeft");
+        animator.Play("IdleLeft");
         //yield return new WaitForSeconds(2);
         attacking = false;
     }
@@ -213,22 +229,16 @@ public class Character : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        Debug.Log("DAMAGE");
         currentHealth -= damage;
         healthBar.UpdateHealthBar();
         //transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z);
-        if(currentHealth <= 0)
-        {
-            StartCoroutine("EndGame");
-        }
     }
 
     IEnumerator EndGame()
     {
-        Debug.Log("Player died!");
         //Add death animation
-        yield return new WaitForSeconds(1f);
         isDead = true;
+        yield return new WaitForSeconds(1f);
     }
 
     void OnTriggerEnter2D(Collider2D other)

@@ -17,6 +17,7 @@ TagManager:
   - Music
   - FX
   - Fire
+  - HealthBar
   layers:
   - Default
   - TransparentFX

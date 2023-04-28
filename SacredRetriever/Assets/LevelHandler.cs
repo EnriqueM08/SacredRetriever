@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelHandler : MonoBehaviour
 {
+    public GameObject KnightPrefab;
+    public GameObject WizardPrefab;
     public Character mainCharacter;
     public block aBlock;
     public block bBlock;
@@ -18,6 +20,15 @@ public class LevelHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject temp;
+        if(PlayerPrefs.GetString("selectedChar").Equals("Wizard"))
+        {
+            temp = GameObject.Instantiate(WizardPrefab);
+        }
+        else
+            temp = GameObject.Instantiate(KnightPrefab);
+        temp.transform.position = new Vector3(1.507f, -5.524f, 0);
+        mainCharacter = GameObject.FindGameObjectWithTag("Player").GetComponent<Character>();
         metalBars = GameObject.Find("MetalBars");
         pauseMenu.enabled = false;
         isPaused = false;
@@ -46,7 +57,7 @@ public class LevelHandler : MonoBehaviour
         // }
     }
 
-    void PauseGame() {
+    public void PauseGame() {
         ShowPauseMenu();
         isPaused = true;
         Time.timeScale = 0;

@@ -12,11 +12,12 @@ public class SpawnBlobs : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        character = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(SpawnBlob());
     }
 
     void Update() {
+        if(character == null)
+            character = GameObject.FindGameObjectWithTag("Player");
         if(character.transform.localPosition.x <= -12.5f) {
             inRange = true;
         }
