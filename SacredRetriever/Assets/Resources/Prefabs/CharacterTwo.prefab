@@ -244,6 +244,7 @@ MonoBehaviour:
   pickupItem: {fileID: -192694063930385318}
   music: {fileID: 0}
   playingDeath: 0
+  actions: {fileID: -944628639613478452, guid: 9616b5b4370f43a4aaa3891f9dbab042, type: 3}
 --- !u!95 &3555882984207210934
 Animator:
   serializedVersion: 5

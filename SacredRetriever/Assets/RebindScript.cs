@@ -19,8 +19,8 @@ public class RebindScript : MonoBehaviour
     public Canvas options;
     public Canvas keyBinds;
 
-    public void OnEnable() {
-        var rebinds = PlayerPrefs.GetString("rebinds");
+    public void Start() {
+        string rebinds = PlayerPrefs.GetString("rebinds");
         if(!string.IsNullOrEmpty(rebinds))
             actions.LoadBindingOverridesFromJson(rebinds);
         bindingDisplayUpText.text = InputControlPath.ToHumanReadableString(walkAction.action.bindings[1].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
@@ -28,11 +28,6 @@ public class RebindScript : MonoBehaviour
         bindingDisplayRightText.text = InputControlPath.ToHumanReadableString(walkAction.action.bindings[4].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
         bindingDisplayLeftText.text = InputControlPath.ToHumanReadableString(walkAction.action.bindings[3].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
         bindingDisplayAttackText.text = InputControlPath.ToHumanReadableString(attackAction.action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
-    }
-
-    public void OnDisable() {
-        var rebinds = actions.SaveBindingOverridesAsJson();
-        PlayerPrefs.SetString("rebinds", rebinds);
     }
 
     public void StartRebinding() {
@@ -128,6 +123,8 @@ public class RebindScript : MonoBehaviour
     public void GoBack() {
         keyBinds.enabled = false;
         options.enabled = true;
+        string rebinds = actions.SaveBindingOverridesAsJson();
+        PlayerPrefs.SetString("rebinds", rebinds);
     }
 
     public void GoToRebindScreen() {

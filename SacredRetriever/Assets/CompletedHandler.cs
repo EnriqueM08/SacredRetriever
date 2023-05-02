@@ -18,6 +18,9 @@ public class CompletedHandler : MonoBehaviour
     }
 
     public void QuitGame(){
+        if(PlayerPrefs.GetInt("level") != 3) {
+            PlayerPrefs.SetInt("level", PlayerPrefs.GetInt("curLevel") + 1);
+        }
         Application.Quit();
     }
 }

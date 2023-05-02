@@ -39,7 +39,7 @@ public class Character : MonoBehaviour
     public AudioSource pickupItem;
     public AudioSource music;
     public bool playingDeath = false;
-
+    public InputActionAsset actions;
 
     private void OnMovement (InputValue value) {
         movement = value.Get<Vector2>();
@@ -105,6 +105,9 @@ public class Character : MonoBehaviour
                     break;
         }
         currentHealth = maxHealth;
+        string rebinds = PlayerPrefs.GetString("rebinds");
+        if(!string.IsNullOrEmpty(rebinds))
+            actions.LoadBindingOverridesFromJson(rebinds);
     }
 
     private void FixedUpdate() {
