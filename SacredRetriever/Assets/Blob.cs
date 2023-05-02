@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class Blob : MonoBehaviour
 {
@@ -13,11 +14,12 @@ public class Blob : MonoBehaviour
     public int attackDamage = 20;
     bool canAttack = true;
     public PoolManager poolManager;
+    private bool dead = false;
+    public AudioSource attack;
     
 
     void Start()
     {
-        Debug.Log(PlayerPrefs.GetInt("difficulty"));
         switch (PlayerPrefs.GetInt("difficulty"))
         {
                 case 0:
@@ -53,12 +55,14 @@ public class Blob : MonoBehaviour
 
     IEnumerator Die()
     {
-        Debug.Log("Enemy died!");
+        dead = true;
         animator.Play("BlobDeath");
         currentHealth = 40;
         yield return new WaitForSeconds(.1f);
         canAttack = true;
+        this.GetComponentInParent<AIPath>().canMove = true;
         poolManager.DespawnEnemy(this.transform.parent.gameObject);
+        dead = false;
     }
 
     public void Attack() {
@@ -66,6 +70,7 @@ public class Blob : MonoBehaviour
         Collider2D[] hitPlayer = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, PlayerLayers);
         foreach(Collider2D player in hitPlayer)
         {
+            attack.Play();
             player.GetComponent<Character>().TakeDamage(attackDamage);
         }
         //attacking = false;
@@ -85,6 +90,23 @@ public class Blob : MonoBehaviour
         canAttack = false;
         yield return new WaitForSeconds(2);
         canAttack = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.tag == "Player") {
+            this.GetComponentInParent<AIPath>().canMove = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if(!dead)
+        {
+            if(other.gameObject.tag == "Player") {
+                this.GetComponentInParent<AIPath>().canMove = true;
+            }
+        }
     }
 }
 

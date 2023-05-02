@@ -12,9 +12,12 @@ public class MainMenuHandler : MonoBehaviour
     {
         options.enabled = false;
         keyBinds.enabled = false;
+        if(PlayerPrefs.GetInt("level") == 0) {
+            PlayerPrefs.SetInt("level", 1);
+        }
     }
     public void StartGame(){
-        SceneManager.LoadScene("Level1");
+        SceneManager.LoadScene("LevelSelector");
     }
     
     public void Options(){
@@ -27,5 +30,9 @@ public class MainMenuHandler : MonoBehaviour
 
     public void QuitGame(){
         Application.Quit();
+    }
+
+    public void switchToCharSelect() {
+        SceneManager.LoadScene("CharacterSelector");
     }
 }

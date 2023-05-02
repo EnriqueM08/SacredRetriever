@@ -1,0 +1,34 @@
+{
+    "name": "cutsceneInput",
+    "maps": [
+        {
+            "name": "cutScene",
+            "id": "08d9aa36-baba-450b-96c6-e29338d4ffb9",
+            "actions": [
+                {
+                    "name": "skip",
+                    "type": "Button",
+                    "id": "467048aa-d32d-49dd-9ce8-d83d35826734",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d4299fef-5eca-41f0-b16b-c87f2955f60a",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "skip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -11,12 +11,15 @@ public class LevelHandler : MonoBehaviour
     public block aBlock;
     public block bBlock;
     public block cBlock;
-    public Spawner blobSpawner;
+    public GameObject[] blobSpawners;
     public GameObject backwardsDoor;
     GameObject metalBars;
     public Canvas pauseMenu;
+    public Canvas optionsMenu;
     public static bool isPaused;
-
+    private GameObject[] spawnTorches;
+    private GameObject[] puzzleTorches;
+    private bool allSpawnersDestroyed = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +35,15 @@ public class LevelHandler : MonoBehaviour
         metalBars = GameObject.Find("MetalBars");
         pauseMenu.enabled = false;
         isPaused = false;
+        spawnTorches = GameObject.FindGameObjectsWithTag("SpawnerTorches");
+        puzzleTorches = GameObject.FindGameObjectsWithTag("PuzzleTorches");
+        foreach (GameObject torch in spawnTorches) {
+            torch.SetActive(false);
+        }
+        foreach (GameObject torch in puzzleTorches) {
+            torch.SetActive(false);
+        }
+        blobSpawners = GameObject.FindGameObjectsWithTag("Spawner");
     }
 
     // Update is called once per frame
@@ -39,9 +51,25 @@ public class LevelHandler : MonoBehaviour
     {
         if(mainCharacter.isDead)
         {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("DeathScreen");
         }
-        if(aBlock.GetComponent<block>().inPlace && bBlock.GetComponent<block>().inPlace && cBlock.GetComponent<block>().inPlace && blobSpawner.GetComponent<Spawner>().isDestroyed)
+        allSpawnersDestroyed = true;
+        foreach(GameObject spawner in blobSpawners) {
+            if(!spawner.GetComponent<Spawner>().isDestroyed) {
+                allSpawnersDestroyed = false;
+            }
+        }
+        if(allSpawnersDestroyed) {
+            foreach (GameObject torch in spawnTorches) {
+                torch.SetActive(true);
+            }
+        }
+        if(aBlock.GetComponent<block>().inPlace && bBlock.GetComponent<block>().inPlace && cBlock.GetComponent<block>().inPlace) {
+            foreach (GameObject torch in puzzleTorches) {
+                torch.SetActive(true);
+            }
+        }
+        if(aBlock.GetComponent<block>().inPlace && bBlock.GetComponent<block>().inPlace && cBlock.GetComponent<block>().inPlace && allSpawnersDestroyed)
         {
             Destroy(metalBars);
         }
@@ -52,13 +80,12 @@ public class LevelHandler : MonoBehaviour
         if(mainCharacter.transform.position.y < -5.8f) {
             SceneManager.LoadScene("Completed");
         }
-        // if(Input.GetKeyDown(KeyCode.Escape)) {
-        //     PauseGame();
-        // }
     }
 
     public void PauseGame() {
         ShowPauseMenu();
+        GameObject myEventSystem = GameObject.Find("EventSystem");
+        myEventSystem .GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(null);
         isPaused = true;
         Time.timeScale = 0;
     }
@@ -71,5 +98,6 @@ public class LevelHandler : MonoBehaviour
 
     void ShowPauseMenu() {
         pauseMenu.enabled = true;
+        optionsMenu.enabled = false;
     }
 }

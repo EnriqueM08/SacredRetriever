@@ -18,6 +18,11 @@ TagManager:
   - FX
   - Fire
   - HealthBar
+  - HealthDrop
+  - LevelHandler
+  - GameMusic
+  - SpawnerTorches
+  - PuzzleTorches
   layers:
   - Default
   - TransparentFX

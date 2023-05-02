@@ -23,6 +23,9 @@ public class pressurePlate : MonoBehaviour
             aBlock.transform.position = aLoc;
             bBlock.transform.position = bLoc;
             cBlock.transform.position = cLoc;
+            aBlock.GetComponent<block>().inPlace = false;
+            bBlock.GetComponent<block>().inPlace = false;
+            cBlock.GetComponent<block>().inPlace = false;
             Rigidbody2D a = aBlock.GetComponent<Rigidbody2D>();
             Rigidbody2D b = bBlock.GetComponent<Rigidbody2D>();
             Rigidbody2D c = cBlock.GetComponent<Rigidbody2D>();

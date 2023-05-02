@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5141459765314224811}
   m_Layer: 0
   m_Name: LevelHandler
-  m_TagString: Untagged
+  m_TagString: LevelHandler
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,8 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f394aaca5c3cce445889d121e15fcfb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KnightPrefab: {fileID: 7762602927160136855, guid: d4b38fb61c6ac904a9d2f8215e57c955, type: 3}
+  WizardPrefab: {fileID: 8609434216446821023, guid: 4fed5e64ab198884c8668ab69c35b782, type: 3}
   mainCharacter: {fileID: 0}
   aBlock: {fileID: 0}
   bBlock: {fileID: 0}
   cBlock: {fileID: 0}
-  blobSpawner: {fileID: 0}
+  blobSpawners: []
+  backwardsDoor: {fileID: 0}
+  pauseMenu: {fileID: 0}

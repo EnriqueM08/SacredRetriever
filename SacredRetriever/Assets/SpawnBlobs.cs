@@ -18,7 +18,8 @@ public class SpawnBlobs : MonoBehaviour
     void Update() {
         if(character == null)
             character = GameObject.FindGameObjectWithTag("Player");
-        if(character.transform.localPosition.x <= -12.5f) {
+        if(character.transform.localPosition.x - gameObject.GetComponent<Transform>().localPosition.x < 3 && character.transform.localPosition.x - gameObject.GetComponent<Transform>().localPosition.x > -3) {
+            if(character.transform.localPosition.y - gameObject.GetComponent<Transform>().localPosition.y < 3 && character.transform.localPosition.y - gameObject.GetComponent<Transform>().localPosition.y > -3)
             inRange = true;
         }
         else {
@@ -29,7 +30,7 @@ public class SpawnBlobs : MonoBehaviour
     IEnumerator SpawnBlob() {
         while(true) {
             if(inRange) {
-                Vector2 randomPosition = new Vector2(Random.Range(-21f,-20f),Random.Range(5f, 6f));
+                Vector2 randomPosition = new Vector2(Random.Range(gameObject.GetComponent<Transform>().localPosition.x-1,gameObject.GetComponent<Transform>().localPosition.x+1),Random.Range(gameObject.GetComponent<Transform>().localPosition.y-0.5f, gameObject.GetComponent<Transform>().localPosition.y));
                 GameObject newBlob = PoolManager.RequestEnemy();
                 newBlob.transform.position = randomPosition;
             }

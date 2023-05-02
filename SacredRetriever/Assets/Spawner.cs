@@ -5,8 +5,9 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     public int maxHealth = 200;
-    int currentHealth;
+    public int currentHealth;
     public bool isDestroyed = false;
+    public GameObject healthDrop;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,10 +26,11 @@ public class Spawner : MonoBehaviour
 
     IEnumerator Die()
     {
-        Debug.Log("Spawner destoryed!");
         yield return new WaitForSeconds(.1f);
         Destroy(gameObject.GetComponent<SpawnBlobs>());
         Destroy(gameObject.GetComponent<SpriteRenderer>());
+        Destroy(gameObject.GetComponent<BoxCollider2D>());
         isDestroyed = true;
+        healthDrop.SetActive(true);
     }
 }

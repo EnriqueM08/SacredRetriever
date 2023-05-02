@@ -19,8 +19,11 @@ public class SoundOptions : MonoBehaviour
             sfxSlider.value = .25f;
         } else {
             masterSlider.value = PlayerPrefs.GetFloat("MasterVol");
+            SetVolume("MasterVol", masterSlider.value);
             musicSlider.value = PlayerPrefs.GetFloat("MusicVol");
+            SetVolume("MusicVol", musicSlider.value);
             sfxSlider.value = PlayerPrefs.GetFloat("SFX");
+            SetVolume("SFX", sfxSlider.value);
         }
     }
 

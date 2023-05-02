@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ScreenOptions : MonoBehaviour
 {
     public Dropdown resolutionDropdown;
+    public Text label;
     public Toggle isFullScreen;
     Resolution[] resolutions;
 
@@ -29,6 +30,7 @@ public class ScreenOptions : MonoBehaviour
                 resolutionDropdown.options.Add(new Dropdown.OptionData(resolutionString));
             }
             resolutionDropdown.value = PlayerPrefs.GetInt("curRes");
+            label.text = resolutions[PlayerPrefs.GetInt("curRes")].width.ToString() + "x" + resolutions[PlayerPrefs.GetInt("curRes")].height.ToString();
         }  
     }
 

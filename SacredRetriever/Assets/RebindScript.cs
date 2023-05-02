@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 public class RebindScript : MonoBehaviour
 {
+    public InputActionAsset actions;
     [SerializeField] private InputActionReference attackAction = null;
     [SerializeField] private InputActionReference walkAction = null;
     [SerializeField] private Text bindingDisplayLeftText = null;
@@ -17,6 +18,22 @@ public class RebindScript : MonoBehaviour
     private InputActionRebindingExtensions.RebindingOperation rebindingOperation;
     public Canvas options;
     public Canvas keyBinds;
+
+    public void OnEnable() {
+        var rebinds = PlayerPrefs.GetString("rebinds");
+        if(!string.IsNullOrEmpty(rebinds))
+            actions.LoadBindingOverridesFromJson(rebinds);
+        bindingDisplayUpText.text = InputControlPath.ToHumanReadableString(walkAction.action.bindings[1].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        bindingDisplayDownText.text = InputControlPath.ToHumanReadableString(walkAction.action.bindings[2].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        bindingDisplayRightText.text = InputControlPath.ToHumanReadableString(walkAction.action.bindings[4].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        bindingDisplayLeftText.text = InputControlPath.ToHumanReadableString(walkAction.action.bindings[3].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        bindingDisplayAttackText.text = InputControlPath.ToHumanReadableString(attackAction.action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+    }
+
+    public void OnDisable() {
+        var rebinds = actions.SaveBindingOverridesAsJson();
+        PlayerPrefs.SetString("rebinds", rebinds);
+    }
 
     public void StartRebinding() {
         EventSystem.current.SetSelectedGameObject(null);
@@ -116,5 +133,17 @@ public class RebindScript : MonoBehaviour
     public void GoToRebindScreen() {
         options.enabled = false;
         keyBinds.enabled = true;
+    }
+
+    public void resetBinds() {
+        foreach (InputActionMap map in actions.actionMaps) {
+            map.RemoveAllBindingOverrides();
+        }
+        PlayerPrefs.DeleteKey("rebinds");
+        bindingDisplayUpText.text = InputControlPath.ToHumanReadableString(walkAction.action.bindings[1].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        bindingDisplayDownText.text = InputControlPath.ToHumanReadableString(walkAction.action.bindings[2].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        bindingDisplayRightText.text = InputControlPath.ToHumanReadableString(walkAction.action.bindings[4].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        bindingDisplayLeftText.text = InputControlPath.ToHumanReadableString(walkAction.action.bindings[3].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        bindingDisplayAttackText.text = InputControlPath.ToHumanReadableString(attackAction.action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
     }
 }

@@ -29,14 +29,28 @@ public class Character : MonoBehaviour
     public LevelHandler levelHandler;
     private bool attackPressed = false;
     bool walking = false;
-    bool inFire = false;
+    public bool inFire = false;
+    public bool recovered = false;
+    public bool firstAttack = false;
+    public AudioSource walkSound;
+    public AudioSource attackSound;
+    public AudioSource hurtSound;
+    public AudioSource regenHealth;
+    public AudioSource pickupItem;
+    public AudioSource music;
+    public bool playingDeath = false;
+
+
     private void OnMovement (InputValue value) {
         movement = value.Get<Vector2>();
         walking = true;
     }
 
     private void OnAttack() {
-        attackPressed = true;
+        if(!playingAttackAnimation)
+            attackPressed = true;
+        if(!firstAttack)
+            firstAttack = true;
     }
 
     private void OnPauseGame() {
@@ -67,13 +81,14 @@ public class Character : MonoBehaviour
             StopAllCoroutines();
             rb2d.MovePosition(rb2d.position + movement * speed * Time.fixedDeltaTime);
         }
-        //walking = false;
     }
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<HealthBar>();
+        levelHandler = GameObject.FindGameObjectWithTag("LevelHandler").GetComponent<LevelHandler>();
+        music = GameObject.FindGameObjectWithTag("GameMusic").GetComponent<AudioSource>();
         switch (PlayerPrefs.GetInt("difficulty"))
         {
                 case 0:
@@ -97,12 +112,16 @@ public class Character : MonoBehaviour
             TakeDamage(1);
         if(!LevelHandler.isPaused) {
             bool moving = false;
-            if(!playingAttackAnimation) {
+            if(!playingAttackAnimation && !playingDeath) {
                 if(walking) {
                     MovePlayer();
                     attacking = false;
                     moving = true;
+                    if(!walkSound.isPlaying)
+                        walkSound.Play();
                 }
+                else
+                    walkSound.Stop();
                 if(attackPressed) {
                     if(left == true && attacking == false)
                     {
@@ -113,71 +132,19 @@ public class Character : MonoBehaviour
                     attackPressed = false;
                 }
             }
-            if(!moving && !attacking) {
+            if(!moving && !attacking && !playingDeath) {
                 if(!left)
                     animator.Play("IdleRight");
                 else
                     animator.Play("IdleLeft");
             }
-            //walking = false;
         }
-    }
-
-    void Update () {
-        if(currentHealth <= 0)
-        {
-            StartCoroutine("EndGame");
-        }
-        // moveInput = playerActions.PlayerMap.Movement.ReadValue<Vector2>();
-        // moveInput.y = 0f;
-        // Debug.Log(moveInput);
-        // rb2d.velocity = moveInput * speed;
-        // if(!LevelHandler.isPaused) {
-        //     bool moving = false;
-        //     if(!playingAttackAnimation) {
-        //         if (Input.GetButton("Right")) {
-        //             StopAllCoroutines();
-        //             MovePlayer(Vector3.right * speed * Time.deltaTime);
-        //             moving = true;
-        //             left = false;
-        //             attacking = false;
-        //         }
-        //         if(Input.GetButton("Left")) {
-        //             StopAllCoroutines();
-        //             MovePlayer(Vector3.left * speed * Time.deltaTime);
-        //             moving = true;
-        //             left = true; 
-        //             attacking = false;
-        //         }
-        //         if(Input.GetButton("Up")) {
-        //             MovePlayer(Vector3.up * speed * Time.deltaTime);
-        //             moving = true;
-        //         }
-        //         if(Input.GetButton("Down")) {
-        //             MovePlayer(Vector3.down * speed * Time.deltaTime);
-        //             moving = true;
-        //         }
-        //         if(Input.GetButton("Attack")) {
-        //             if(left == true && attacking == false)
-        //             {
-        //                 StartCoroutine(AttackLeft());
-        //             }
-        //             else if(attacking == false)
-        //                 StartCoroutine(AttackRight());
-        //         }
-        //     }
-        //     if(!moving && !attacking) {
-        //         if(!left)
-        //             animator.Play("IdleKnight");
-        //         else
-        //             animator.Play("IdleKnightLeft");
-        //     }
-        // }
     }
 
     IEnumerator AttackRight() {
         attacking = true;
         playingAttackAnimation = true;
+        attackSound.Play();
         animator.Play("AttackRight");
         yield return new WaitForSeconds(0.75f);
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointRight.position, attackRange, enemyLayers);
@@ -197,6 +164,7 @@ public class Character : MonoBehaviour
     IEnumerator AttackLeft() {
         attacking = true;
         playingAttackAnimation = true;
+        attackSound.Play();
         animator.Play("AttackLeft");
         yield return new WaitForSeconds(0.75f);
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPointLeft.position, attackRange, enemyLayers);
@@ -229,28 +197,46 @@ public class Character : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        healthBar.UpdateHealthBar();
-        //transform.position = new Vector3(transform.position.x + 2, transform.position.y, transform.position.z);
+        if(currentHealth > 0) {
+            currentHealth -= damage;
+            if(currentHealth <= 0)
+            {
+                StartCoroutine("EndGame");
+            }
+            if(!hurtSound.isPlaying)
+                hurtSound.Play();
+            healthBar.UpdateHealthBar();
+        }
+        
     }
 
     IEnumerator EndGame()
     {
         //Add death animation
+        playingDeath = true;
+        animator.Play("Death");
+        yield return new WaitForSeconds(2.5f);
         isDead = true;
-        yield return new WaitForSeconds(1f);
     }
 
     void OnTriggerEnter2D(Collider2D other)
      {
         if (other.gameObject.CompareTag("SacredItem"))
         {
-            Debug.Log("RAN");
             Destroy(other.gameObject);
             hasTreasure = true;
+            music.Stop();
+            pickupItem.Play();
         }
         if(other.gameObject.CompareTag("Fire")) {
             inFire = true;
+        }
+        if(other.gameObject.CompareTag("HealthDrop")) {
+            currentHealth = maxHealth;
+            recovered = true;
+            Destroy(other.gameObject);
+            healthBar.UpdateHealthBar();
+            regenHealth.Play();
         }
      }
 
