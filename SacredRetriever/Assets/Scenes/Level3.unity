@@ -4988,7 +4988,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3659867014514518679, guid: b2dfd96b84de13d489d75c94dcb5e3d2, type: 3}
       propertyPath: defaultPoolSize
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7903810423756616244, guid: b2dfd96b84de13d489d75c94dcb5e3d2, type: 3}
       propertyPath: m_Name
@@ -37545,7 +37545,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 2799918.2}
+  m_AnchoredPosition: {x: 0, y: 2802284.5}
   m_SizeDelta: {x: 0, y: 44.43}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1681681537

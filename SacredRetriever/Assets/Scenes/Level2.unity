@@ -11944,6 +11944,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 480910879}
     - target: {fileID: 5141459765314224811, guid: 0ae9eb33055014d4ba2daf756c780fb7, type: 3}
+      propertyPath: optionsMenu
+      value: 
+      objectReference: {fileID: 489278185}
+    - target: {fileID: 5141459765314224811, guid: 0ae9eb33055014d4ba2daf756c780fb7, type: 3}
       propertyPath: backwardsDoor
       value: 
       objectReference: {fileID: 1141713768}
@@ -31704,7 +31708,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 3035.3308}
+  m_AnchoredPosition: {x: 0, y: 7932.4478}
   m_SizeDelta: {x: 0, y: 44.43}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &1801828508
@@ -33107,7 +33111,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3659867014514518679, guid: b2dfd96b84de13d489d75c94dcb5e3d2, type: 3}
       propertyPath: defaultPoolSize
-      value: 30
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7903810423756616244, guid: b2dfd96b84de13d489d75c94dcb5e3d2, type: 3}
       propertyPath: m_Name
